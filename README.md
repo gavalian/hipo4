@@ -96,7 +96,77 @@ with instances of this object. Here is a part of the code (also included
     }
   ```
 
-  The full code is in the repository (including fillEvent routine), and is named
-  "WritePhysicsEvents.java".
+The full code is in the repository (including fillEvent routine), and is named
+"WritePhysicsEvents.java".
 
-  # Reading First File
+# Reading First File
+
+After you have a new file created, you can read objects from it. The object
+descriptions come from the file, it keeps dictionary of objects that were written.
+Here is the example program reading the file created in the previous section
+(for full code with includes look at src/main/java/org/jlab/hipo4/ReadPhysicsEvent.java):
+
+```java
+public class ReadPhysicsEvent {
+
+    public static void main(String[] args){
+
+        HipoReader reader = new HipoReader();
+        reader.open("myfirstData.hipo");
+
+        Schema particlesSchema = reader.getSchemaFactory().getSchema("data::event");
+
+        Bank particles = new Bank(particlesSchema); // creates a bank for reading in.
+        Event    event = new Event();
+
+        while(reader.hasNext()==true){
+            reader.nextEvent(event);
+            event.read(particles);
+
+            System.out.println(particles.nodeString());
+        }
+    }
+}
+```
+
+The printout will look something like this:
+
+```bash
+reader:: *****>>>>> openning file : myfirstData.hipo
+reader:: ***** dictionary entries :            1
+reader:: ***** number of  records :            1
+reader:: ***** number of  events  :          100
+           pid :          3         0         3        12         7         2
+        charge :          0         0         0         0         0         0
+            px :     1.5671    0.3957    1.5059    0.1059    0.5070    1.6558
+            py :     1.2131    0.2368    0.1146    0.1316    1.1042    1.7051
+            pz :     0.2896    0.1184    1.1606    1.2504    0.8243    0.5830
+            vx :     0.0168    0.0409    0.0581    0.0615    0.0901    0.0283
+            vy :     0.0301    0.0079    0.0740    0.0545    0.0222    0.0789
+            vz :     3.4132    1.4249    3.1226    2.3459    1.6301    3.0557
+          beta :     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+          chi2 :     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+        status :          0         0         0         0         0         0
+
+           pid :         14        12         2         9        13        12
+        charge :          0         0         0         0         0         0
+            px :     1.1114    0.8347    1.3506    0.5111    1.7776    1.5834
+            py :     1.1189    0.0071    1.5518    1.7602    1.0176    0.0376
+            pz :     0.2778    1.5869    0.9217    1.6153    0.0597    0.3919
+            vx :     0.0707    0.0068    0.0994    0.0572    0.0857    0.0869
+            vy :     0.0720    0.0317    0.0561    0.0047    0.0633    0.0996
+            vz :     1.4709    1.5315    1.0431    0.5665    3.1120    0.8961
+          beta :     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+          chi2 :     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+        status :          0         0         0         0         0         0
+```
+
+# Accessing Bank Information
+
+For more complex example on how to read the data stored in the bank, and how
+to write dependent bank and pase it look at the codes:
+
+```bash
+src/main/java/org/jlab/hipo4/WriteDetectorData.java
+src/main/java/org/jlab/hipo4/ReadDetectorData.java
+```
