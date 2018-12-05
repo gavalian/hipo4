@@ -1,5 +1,5 @@
 
-<img src="https://github.com/gavalian/hipo4/blob/master/src/main/resources/hipo-logo-png.png">
+<img src="https://github.com/gavalian/hipo4/blob/master/src/main/resources/hipo-logo-png.png" width="200">
 
 # HIPO-4 (High Performance Output)
 
